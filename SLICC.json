@@ -1,0 +1,118 @@
+{ 
+    "name":         "SLICC",
+    "scopeName":    "source.slicc",
+    "fileTypes":    ["sm"],
+    "patterns":     [
+    					{ 
+    						"name" : "string.quoted.double.desc",
+    						"begin" : "\"",
+    						"end" : "\""
+    					},
+
+                        { 
+                            "name" : "string.quoted.single.desc",
+                            "begin" : "'",
+                            "end" : "'"
+                        },
+
+                        {
+                            "name" : "comment.line",
+                            "begin" : "\/\/",
+                            "end" : "$"
+                        },
+
+                        {
+                            "name" : "comment.block",
+                            "begin" : "\/[*]",
+                            "end" : "[*]\/"
+                        },
+
+                        {
+                            "name" : "external_type",
+                            "begin" : "(external_type).*\\{",
+                            "beginCaptures" :
+                                {
+                                    "1" : { "name" : "constant.language" },
+                                },
+                                "patterns" :
+                                [
+                                    {
+                                        "name" : "function",
+                                        "match" : "\\s*([a-zA-Z0-9_]+)\\s+([a-zA-Z0-9_]+)\\((.*)\\);",
+                                        "captures" :
+                                        {
+                                            "1" : { "name" : "storage.type" },
+                                            "2" : { "name" : "entity.name.function" },
+                                            "3" : { "name" : "storage.type" }
+                                        }
+                                    }
+                                ],
+                            "end" :  "\\}",
+                        },
+
+                        {
+                            "name" : "structure",
+                            "begin" : "(structure).*\\{",
+                            "beginCaptures" :
+                                {
+                                    "1" : { "name" : "constant.language" }
+                                },
+                            "patterns" :
+                                [
+                                    {
+                                        "name" : "members",
+                                        "match" : "\\s*([a-zA-Z0-9_]+)\\s+([a-zA-Z0-9_]+).*(desc)=(\".*\");",
+                                        "captures" :
+                                        {
+                                            "1" : { "name" : "storage.type" },
+                                            "2" : { "name" : "text.plain" },
+                                            "3" : { "name" : "storage.type" },
+                                            "4" : { "name" : "string.quoted.double" },
+                                            "5" : { "name" : "storage.type" },
+                                            "6" : { "name" : "string.quoted.double" }
+                                        }
+                                    }
+                                ],
+                            "end" :  "\\}"
+                        },
+
+                        {
+                            "name" : "constant.language",
+                            "match" : "\\b(machine|structure|enumeration|external_type)\\b"
+                            
+                        },
+
+                        {
+                            "name" : "support.type",
+                            "match" : "\\b(desc|format|default|network|virtual_network|ordered|interface|template_hack|constructor_hack|vnet_type)\\b"
+                            
+                        },
+
+                        {
+                            "name" : "support.function",
+                            "match" : "\\b(action|transition|trigger|error|peek|assert|DEBUG_EXPR|enqueue|dequeue|in_port|out_port)\\b"
+                            
+                        },
+
+                        {
+                            "name" : "keyword.control",
+                            "match" : "\\b(if|return|switch|else)\\b"
+                            
+                        },
+
+                        {
+                            "name" : "storage.type",
+                            "match" : "\\b(string|bool|void)\\b"
+                        },
+
+                        {
+                            "name" : "constant.language",
+                            "match" : "\\b(true|false)\\b"
+                            
+                        }
+
+
+
+					],
+    "uuid":         ""
+}
